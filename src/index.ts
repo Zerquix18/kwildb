@@ -1,4 +1,4 @@
-import kwildbBuilder from './kwildb';
+import kwildbBuilder from './kwildbBuilder';
 import kwildbTable from './kwildbTable';
 
 export { kwildbTable };
