@@ -110,15 +110,11 @@ class KwilDBBuilder {
       ${constraints.join(',')}
     )`;
 
-    console.log(sqlStatement);
-
     const result = await connection.preparedStatement(sqlStatement, [], this.sync);
 
     if (typeof result === 'string') {
       throw new Error(result);
     }
-
-    console.log(result);
   }
 
   async dropTable(name: string) {
