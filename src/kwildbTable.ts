@@ -204,24 +204,6 @@ class KwilDBTable {
     return parseFloat(result.rows[0].sum);
   }
 
-  async rawQuery(query: string) {
-    const result = await this.connection.query(query, this.sync);
-    if (typeof result === 'string') {
-      throw new Error(result);
-    }
-
-    return result;
-  }
-
-  async rawPreparedStatement(query: string, values: string[] = []) {
-    const result = await this.connection.preparedStatement(query, values, this.sync);
-    if (typeof result === 'string') {
-      throw new Error(result);
-    }
-
-    return result;
-  }
-
   ////////// -- QUERY MODIFIERS
 
   where(field: string, operator: ConditionOperator, value: string | number) {

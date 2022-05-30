@@ -132,6 +132,28 @@ class KwilDBBuilder {
       throw new Error(result);
     }
   }
+
+  async rawQuery(query: string) {
+    const connection = this.getConnection();
+
+    const result = await connection.query(query, this.sync);
+    if (typeof result === 'string') {
+      throw new Error(result);
+    }
+
+    return result;
+  }
+
+  async rawPreparedStatement(query: string, values: string[] = []) {
+    const connection = this.getConnection();
+
+    const result = await connection.preparedStatement(query, values, this.sync);
+    if (typeof result === 'string') {
+      throw new Error(result);
+    }
+
+    return result;
+  }
 }
 
 export default KwilDBBuilder;

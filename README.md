@@ -201,6 +201,11 @@ There are aggregate functions to get data from your table:
 
 You can use the `query` and `preparedStatement` to perform custom queries.
 
+```javascript
+  const result = await kwildb.rawQuery('SELECT * FROM users');
+  const result2 = await kwildb.rawPreparedStatement('SELECT * FROM users WHERE id = $1', [1]);
+```
+
 ## Error handling
 
 If the query is wrong, an exception will be thrown. You should always catch the exception.
