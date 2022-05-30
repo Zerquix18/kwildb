@@ -10,8 +10,9 @@ You have to first create an instance for kwildb, which allows you to have multip
 import KwilDBBuilder from './src/kwildb';
 
 const secretKey = '';
+const sync = false;
 
-const kwildb = new KwilDBBuilder(secretKey, false);
+const kwildb = new KwilDBBuilder(secretKey, sync);
 ```
 
 You can specify whether you want to propagate your changes with the second parameter of the KwilDBBuilder constructor.
@@ -32,6 +33,38 @@ The values for the first parameter of connect include:
 * **privateKey**: (required) Your private key.
 
 This will create a connection called `default`. You can give your connection a name by passing it as the second parameter. You can then change your connection using `kwildb.setCurrentConnection('default')`.
+
+You can access the current connection object using `getConnection`:
+
+```javascript
+  const connection = kwildb.getConnection();
+```
+
+This should give you access to all the functionality that kwilDB supports.
+
+## Syncing
+
+By default, you specify whether or not changes will be propagated in the KwilDBBuilder constructor:
+
+```javascript
+const sync = false;
+
+const kwildb = new KwilDBBuilder(secretKey, sync);
+```
+
+You can change this behavior using `setSync`:
+
+```javascript
+  kwildb.setSync(true);
+```
+
+And you can check it with `isSyncing()`:
+
+```javascript
+  if (kwildb.isSyncing()) {
+    // do stuff...
+  }
+```
 
 ## Create a schema
 
