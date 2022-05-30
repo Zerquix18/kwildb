@@ -47,6 +47,24 @@ You can also drop it:
   await kwildb.dropSchema('public');
 ```
 
+## Create tables
+
+You can create tables using the `createTable` method.
+
+```javascript
+  await kwildb.createTable('posts', {
+    id: 'integer',
+    title: 'varchar(30)',
+    content: 'text',
+  });
+``` 
+
+And delete them using `dropTable`:
+
+```javascript
+  await kwildb.dropTable('posts');
+```
+
 ## Inserting
 
 You can do an INSERT using the `insert` method, which accepts an array with a list of key-value:

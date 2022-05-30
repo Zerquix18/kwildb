@@ -1,5 +1,5 @@
 import KwilDBTable from './kwildbTable';
-import { KwilDBConnectorConfig } from './models';
+import { KeyValueString, KwilDBConnectorConfig } from './models';
 
 const KwilDB = require('kwildb');
 
@@ -44,6 +44,14 @@ class KwilDBBuilder {
     return connection;
   }
 
+  setSync(sync: boolean) {
+    this.sync = sync;
+  }
+
+  isSyncing() {
+    return this.sync;
+  }
+
   // --- table
 
   table(tableName: string) {
@@ -71,7 +79,7 @@ class KwilDBBuilder {
   async createSchema(name: string) {
     const connection = this.getConnection();
 
-    const result = await connection.preparedStatement(`CREATE SCHEMA ${name}`, this.sync);
+    const result = await connection.preparedStatement(`CREATE SCHEMA ${name}`, [], this.sync);
 
     if (typeof result === 'string') {
       throw new Error(result);
@@ -81,7 +89,44 @@ class KwilDBBuilder {
   async dropSchema(name: string) {
     const connection = this.getConnection();
 
-    const result = await connection.preparedStatement(`DROP SCHEMA ${name}`, this.sync);
+    const result = await connection.preparedStatement(`DROP SCHEMA ${name}`, [], this.sync);
+
+    if (typeof result === 'string') {
+      throw new Error(result);
+    }
+  }
+
+  async createTable(name: string, columns: KeyValueString, constraints: string[] = []) {
+    const connection = this.getConnection();
+
+    const columnsSql = [];
+    for (let [column, type] of Object.entries(columns)) {
+      const columnSql = `${column} ${type}`;
+      columnsSql.push(columnSql);
+    }
+
+    let sqlStatement = `CREATE TABLE ${name} (
+      ${columnsSql.join(',')}${constraints.length > 0 ? ',' : ''}
+      ${constraints.join(',')}
+    )`;
+
+    console.log(sqlStatement);
+
+    const result = await connection.preparedStatement(sqlStatement, [], this.sync);
+
+    if (typeof result === 'string') {
+      throw new Error(result);
+    }
+
+    console.log(result);
+  }
+
+  async dropTable(name: string) {
+    const connection = this.getConnection();
+
+    const sqlStatement = `DROP TABLE ${name}`;
+
+    const result = await connection.preparedStatement(sqlStatement, [], this.sync);
 
     if (typeof result === 'string') {
       throw new Error(result);

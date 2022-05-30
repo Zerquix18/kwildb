@@ -36,3 +36,7 @@ export type InCondition = {
 
 export type Condition = SimpleCondition | NullCondition | BetweenCondition | InCondition;
 export type Order = 'asc' | 'desc';
+
+export type KeyValueString = {
+  [key: string]: string;
+}
