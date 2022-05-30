@@ -67,6 +67,26 @@ class KwilDBBuilder {
     const { debit } = await connection.getMoatDebit();
     return debit;
   }
+
+  async createSchema(name: string) {
+    const connection = this.getConnection();
+
+    const result = await connection.preparedStatement(`CREATE SCHEMA ${name}`, this.sync);
+
+    if (typeof result === 'string') {
+      throw new Error(result);
+    }
+  }
+
+  async dropSchema(name: string) {
+    const connection = this.getConnection();
+
+    const result = await connection.preparedStatement(`DROP SCHEMA ${name}`, this.sync);
+
+    if (typeof result === 'string') {
+      throw new Error(result);
+    }
+  }
 }
 
 export default KwilDBBuilder;

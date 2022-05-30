@@ -33,6 +33,20 @@ The values for the first parameter of connect include:
 
 This will create a connection called `default`. You can give your connection a name by passing it as the second parameter. You can then change your connection using `kwildb.setCurrentConnection('default')`.
 
+## Create a schema
+
+You can create a schema using the `createSchema` method.
+
+```javascript
+  await kwildb.createSchema('public');
+```
+
+You can also drop it:
+
+```javascript
+  await kwildb.dropSchema('public');
+```
+
 ## Inserting
 
 You can do an INSERT using the `insert` method, which accepts an array with a list of key-value:
